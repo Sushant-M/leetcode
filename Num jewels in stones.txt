@@ -1,3 +1,4 @@
+My first solution:
 class Solution {
     public int numJewelsInStones(String J, String S) {
         int total =0;
@@ -24,3 +25,18 @@ class Solution {
 
 Run time: 24%
 Memory: 100%
+
+Much better way:
+
+Just add the jewels to a set and then iterate over
+the other array adding if the stone is a jewel
+
+Set<Character> Jset = new HashSet();
+        for (char j: J.toCharArray())
+            Jset.add(j);
+
+        int ans = 0;
+        for (char s: S.toCharArray())
+            if (Jset.contains(s))
+                ans++;
+        return ans;
