@@ -1,0 +1,18 @@
+class Solution {
+    public int maxArea(int[] height) {
+        int max = 0;
+        for(int i=0; i< height.length; i++){
+            for(int j=0 ; j<height.length; j++){
+                int local = Math.abs(j-i) * Math.min(height[i],height[j]);
+                if(local>max){
+                    max = local;
+                }
+            }
+        }
+        return max;
+    }
+}
+Shit solution
+
+Better one:
+
