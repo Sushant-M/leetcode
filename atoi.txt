@@ -1,0 +1,48 @@
+class Solution {
+    public int myAtoi(String str) {
+        
+        if(str.length() == 0){
+            return 0;
+        }
+        
+        int counter=0;
+        long neg = 1;
+        long sum = 0;
+        //Skip all whitespaces
+        while(counter<str.length() && str.charAt(counter)== ' '){
+            counter++;
+        }
+        
+        //If positive then ignore
+        if(counter<str.length() && str.charAt(counter) == '+'){
+            counter++;
+            if(counter<str.length() && Character.isDigit(str.charAt(counter)) == false){return 0;}
+
+        }
+       
+        //If negative then make multiplier -1
+        if(counter<str.length() && str.charAt(counter) == '-'){
+            neg = -1;
+            counter++;
+            if(counter<str.length() && Character.isDigit(str.charAt(counter)) == false){return 0;}
+        }
+        
+        while(counter<str.length() && Character.isDigit(str.charAt(counter))){
+            sum = sum*10 + Character.getNumericValue(str.charAt(counter));
+            
+            if(neg == 1){
+                if(sum > Integer.MAX_VALUE){
+                    return Integer.MAX_VALUE;
+                }
+            }else{
+                if( -sum < Integer.MIN_VALUE){
+                    return Integer.MIN_VALUE;
+                }
+            }
+            counter++;
+        }
+        long ans = neg*sum;
+        return (int)ans;
+        
+    }
+}
