@@ -1,0 +1,61 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> arr = new ArrayList<List<Integer>>();
+        HashMap<TreeNode, Integer> level = new HashMap<TreeNode,Integer>();
+        HashMap<TreeNode, TreeNode> parent = new HashMap<TreeNode,TreeNode>();
+        
+        if(root==null){return arr;}
+        
+        int i=1;//level
+        ArrayList<TreeNode> frontier = new ArrayList<TreeNode>();
+        frontier.add(root);
+        level.put(root,i-1);
+        List<Integer> arr0 = new ArrayList<Integer>();
+        arr0.add(root.val);
+        arr.add(arr0);
+        while(!frontier.isEmpty()){
+            ArrayList<TreeNode> next = new ArrayList<TreeNode>();
+            List<Integer> arrn = new ArrayList<Integer>();
+            for(TreeNode n: frontier){
+                if(n.left !=null && !level.containsKey(n.left)){
+                    level.put(n.left, i);
+                    parent.put(n.left,n);
+                    next.add(n.left);
+                    arrn.add(n.left.val);
+                }
+                if(n.right != null && !level.containsKey(n.right)){
+                    level.put(n.right, i);
+                    parent.put(n.right, n);
+                    next.add(n.right);
+                    arrn.add(n.right.val);
+                }
+            }
+            if(!arrn.isEmpty()){
+                arr.add(arrn);
+            }
+            i++;
+            frontier=next;
+        }
+        /*
+        for(TreeNode n: level.keySet()){
+            int level1 = level.get(n);
+            
+            System.out.println("Node: "+ n.val + " level is "+ level1);
+        }*/
+        for(int x=0; x<arr.size(); x++){
+            if((x+1) % 2 == 0){
+                Collections.reverse(arr.get(x));
+            }
+        }
+        return arr;
+    }
+}
