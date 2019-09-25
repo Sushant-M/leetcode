@@ -1,0 +1,31 @@
+class Solution {
+    public String mostCommonWord(String paragraph, String[] banned) {
+        paragraph+=".";
+        HashSet<String> set = new HashSet<String>();
+        int max = Integer.MIN_VALUE;
+        String ans = new String();
+        HashMap<String, Integer> map = new HashMap<String,Integer>();
+        for(String s: banned){
+            set.add(s);
+        }
+        
+        StringBuilder sb = new StringBuilder();
+        
+        for(Character c: paragraph.toCharArray()){
+            if(Character.isLetter(c)){
+                sb.append(Character.toLowerCase(c));
+            }else if(sb.length()>0){
+                String processed = sb.toString();
+                if(!set.contains(processed)){
+                    map.put(processed, map.getOrDefault(processed,0)+1);
+                    if(map.get(processed) > max){
+                        max=map.get(processed);
+                        ans = processed;
+                    }
+                }
+                sb.setLength(0);
+            }
+        }
+        return ans;
+    }
+}
